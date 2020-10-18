@@ -34,7 +34,7 @@ $(function () {
             }
         }
     });
-    var net = "http://ajax.frontend.itheima.net";
+    // var net = "http://ajax.frontend.itheima.net";
     //注册提交
     $("#regBtn").on("click", function () {
         //获取数据
@@ -43,7 +43,7 @@ $(function () {
         let userName = $("#fm-reg [name=username]").val();
         let passWord = $("#fm-reg [name=password]").val();
 
-        $.post(net + "/api/reguser", txtAll, function (res) {
+        $.post("/api/reguser", txtAll, function (res) {
             console.log(res);
             //成功
             if (res.status == 0) {
@@ -60,17 +60,17 @@ $(function () {
         let loginV = $("#loginfm").serialize();
         $.ajax({
             method: "POST",
-            url: net + "/api/login",
+            url: "/api/login",
             data: loginV,
             success: function (res) {
-                console.log(res);
                 layer.msg(res.message, {
                     icon: res.status ? 2 : 1,
                     time: 700 //2秒关闭（如果不配置，默认是3秒）
                 }, function () {
                     //==0成功
                     if (res.status == 0) {
-                        location = "login.html"
+                        localStorage.setItem("token", res.token);
+                        location = "logined.html"
                     }
                 });
             }
