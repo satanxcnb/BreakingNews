@@ -34,6 +34,8 @@ $(function () {
             }
         }
     });
+    // -----------------------
+
     // var net = "http://ajax.frontend.itheima.net";
     //注册提交
     $("#regBtn").on("click", function () {
