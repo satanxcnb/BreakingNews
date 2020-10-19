@@ -8,10 +8,10 @@ $(function () {
         }
     })
     //重置
-    $("#btnReset").on("click", function (e) {
+    /* $("#btnReset").on("click", function (e) {
         e.preventDefault();
         getUserInfo();
-    })
+    }) */
     //form表单提交
     $(".layui-form").on("submit", function (e) {
         e.preventDefault()
@@ -21,10 +21,12 @@ $(function () {
             url: "/my/userinfo",
             data: str,
             success: function (res) {
-                console.log(res);
                 //成功！
+                layui.layer.msg(res.message, {
+                    icon: res.status ? 5 : 1,
+                    time: 700 //2秒关闭（如果不配置，默认是3秒）
+                })
                 if (res.status === 0) {
-                    layui.layer.msg(res.message)
                     window.parent.getUserInfo();
                 }
             }
@@ -40,7 +42,6 @@ function getUserInfo() {
         method: "get",
         url: "/my/userinfo",
         success: function (res) {
-            console.log(res);
             layui.form.val('formUserInfo', res.data);
         }
     })
