@@ -16,8 +16,26 @@
             <span>文章列表</span>
         </div>
 
-        <!-- 内容区域 -->
+
         <div class="layui-card-body">
+            <!-- 筛选区域 -->
+            <form class="layui-form" id="ctFm" action="">
+                <div class="layui-form-item layui-inline">
+                    <select id="selects" name="cate_id">
+                    </select>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <select name="state" name="state">
+                        <option value="">所有状态</option>
+                        <option value="已发布">已发布</option>
+                        <option value="草稿">草稿</option>
+                    </select>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">筛选</button>
+                </div>
+            </form>
+            <!-- 列表区域 -->
             <table class="layui-table">
                 <colgroup>
                     <!-- 列 -->
@@ -50,8 +68,18 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- 分页区域 -->
+            <div id="pageBox"></div>
         </div>
     </div>
+    <!-- 分类模板 -->
+    <script type="text/html" id="tpl-cates">
+        <option value="">所有状态</option>
+        {{each}}
+        <option value="{{$value.name}}">{{$value.name}}</option>
+        {{/each}}
+
+    </script>
 
     <!-- td模板 -->
     <script type="text/html" id="tdmoban">
@@ -62,8 +90,8 @@
             <td>{{$value.state}}</td>
             <td>{{$value.cate_name}}</td>
             <td>
-                <button type="button" data-id="{{$value.id}}" class="layui-btn layui-btn-xs">编辑</button>
-                <button type="button" data-id="{{$value.id}}" class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
+                <button type="button" id="btn-eidt" data-id="{{$value.id}}" class="layui-btn layui-btn-xs">编辑</button>
+                <button type="button" data-id="{{$value.id}}" data-id="{{$value.Id}}" id="btnDel" class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
             </td>
         </tr>
         {{/each}}
@@ -73,6 +101,7 @@
     <script src="/assets/lib/jquery.js"></script>
     <script src="/assets/js/baseApi.js"></script>
     <script src="/assets/lib/template-web.js"></script>
+    <!-- 自己的js -->
     <script src="/assets/js/article/art_list.js"></script>
 </body>
 
