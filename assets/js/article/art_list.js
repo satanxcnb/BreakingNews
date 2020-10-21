@@ -19,8 +19,7 @@ $(function () {
 
     //删除按钮
     $("tbody").on("click", "#btnDel", function () {
-        var Dellength = $("#btnDel").length;
-        // console.log(Dellength);
+        var Dellength = $("tr #btnDel").length;
         // 弹出层，询问用户是否删除
         layer.confirm('确认删除吗?', { icon: 3, title: '提示' }, function (index) {
             //获取文章id
@@ -34,6 +33,7 @@ $(function () {
                         icon: res.status ? 5 : 1,
                         time: 600
                     });
+                    // console.log(Dellength);
                     if (Dellength == 1) {
                         //证明此页码上没有数据了，应该让页码数-1，并刷新页面
                         req.pagenum = req.pagenum == 1 ? 1 : req.pagenum - 1;
@@ -75,7 +75,6 @@ $(function () {
         var state = $("#ctFm [name=state]").val();
         req.cate_id = cate_id;
         req.state = state;
-        console.log(req);
         getTable();
     })
 
@@ -101,7 +100,6 @@ function getTable() {
         url: "/my/article/list",
         data: req,
         success(res) {
-            console.log(res);
             if (res.status !== 0) {
                 return layui.layer.msg(res.message);
             }

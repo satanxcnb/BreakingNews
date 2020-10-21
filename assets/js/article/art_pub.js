@@ -63,7 +63,6 @@ $(function () {
     })
 })
 
-
 // 定义一个发布文章的方法
 function publishArticle(fd) {
     $.ajax({
