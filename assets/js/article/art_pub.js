@@ -6,7 +6,7 @@ $(function () {
     initEditor()
 
     // 定义文章的发布状态
-    var art_state = "已发布";
+    var state = "已发布";
 
     // 选择封面的按钮
     $("#btnChooseImage").on("click", function () {
@@ -34,7 +34,7 @@ $(function () {
 
     // 存为草稿点击
     $("#btnSave2").on("click", function () {
-        art_state = "草稿";
+        state = "草稿";
     })
 
     // 为表单绑定submit
@@ -44,7 +44,7 @@ $(function () {
         var fd = new FormData($(this)[0]);
 
         // 将发布状态追加到fd
-        fd.append("art_state", art_state);
+        fd.append("state", state);
         // 裁剪后的图片，输出为图片文件
         $image
             .cropper('getCroppedCanvas', { // 创建一个 Canvas 画布
@@ -55,6 +55,9 @@ $(function () {
                 // 将 Canvas 画布上的内容，转化为文件对象
                 // 得到文件对象后，进行后续的操作
                 fd.append("cover_img", blob);
+                /* fd.forEach((k, v) => {
+                    console.log(k, v);
+                }) */
                 publishArticle(fd);
             })
     })
@@ -71,6 +74,7 @@ function publishArticle(fd) {
         contentType: false,
         processData: false,
         success(res) {
+            console.log(res);
             layui.layer.msg(res.message, {
                 icon: res.status ? 5 : 1,
                 time: 500
@@ -89,7 +93,6 @@ function initCate() {
         method: "GET",
         url: "/my/article/cates",
         success(res) {
-            console.log(res);
             /* layui.layer.msg(res.message, {
                 icon: res.status ? 5 : 1,
                 time: 700

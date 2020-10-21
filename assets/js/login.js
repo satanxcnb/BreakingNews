@@ -23,7 +23,7 @@ $(function () {
         flag = true;
     })
     //---------------
-    //表单验证
+    //表单验证 //submit提交之前触发该代码
     var form = layui.form;
     form.verify({
         pwd: [/^[\S]{6,12}$/, '密码必须6到12位,且不能出现空格'],
@@ -50,7 +50,6 @@ $(function () {
          let passWord = $("#fm-reg [name=password]").val(); */
 
         $.post("/api/reguser", txtAll, function (res) {
-            console.log(1);
             //成功
             layui.layer.msg(res.message, {
                 icon: res.status ? 5 : 1,
@@ -66,8 +65,9 @@ $(function () {
         })
     })
     //登录按钮
-    $("#loginbtn").on("click", function () {
-        let loginV = $("#loginfm").serialize();
+    $("#loginfm").on("submit", function (e) {
+        e.preventDefault();
+        let loginV = $(this).serialize();
         $.ajax({
             method: "POST",
             url: "/api/login",
@@ -75,7 +75,7 @@ $(function () {
             success: function (res) {
                 layer.msg(res.message, {
                     icon: res.status ? 2 : 1,
-                    time: 700 //2秒关闭（如果不配置，默认是3秒）
+                    time: 600 //2秒关闭（如果不配置，默认是3秒）
                 }, function () {
                     //==0成功
                     if (res.status == 0) {
@@ -92,7 +92,8 @@ $(function () {
     $(document).on("keyup", function (e) {
         if (e.keyCode == 13) {
             if (flag) {
-                $("#loginbtn").trigger("click");
+                /* $("#loginName,#userPwd").trigger('blur'); */
+                $("#loginfm").trigger('submit');
             } else {
                 $("#regBtn").trigger("click");
             }

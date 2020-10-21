@@ -39,7 +39,7 @@
             <table class="layui-table">
                 <colgroup>
                     <!-- 列 -->
-                    <col>
+                    <col width="200">
                     <col width="150">
                     <col width="180">
                     <!-- tr的宽度 -->
@@ -76,7 +76,7 @@
     <script type="text/html" id="tpl-cates">
         <option value="">所有状态</option>
         {{each}}
-        <option value="{{$value.name}}">{{$value.name}}</option>
+        <option value="{{$value.Id}}">{{$value.name}}</option>
         {{/each}}
 
     </script>
@@ -86,12 +86,12 @@
         {{each}}
         <tr>
             <td>{{$value.title}}</td>
+            <td>{{$value.cate_name}}</td>
             <td>{{$value.pub_date}}</td>
             <td>{{$value.state}}</td>
-            <td>{{$value.cate_name}}</td>
             <td>
                 <button type="button" id="btn-eidt" data-id="{{$value.id}}" class="layui-btn layui-btn-xs">编辑</button>
-                <button type="button" data-id="{{$value.id}}" data-id="{{$value.Id}}" id="btnDel" class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
+                <button type="button" data-id="{{$value.Id}}" data-id="{{$value.Id}}" id="btnDel" class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
             </td>
         </tr>
         {{/each}}

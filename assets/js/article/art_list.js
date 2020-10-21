@@ -19,19 +19,19 @@ $(function () {
 
     //删除按钮
     $("tbody").on("click", "#btnDel", function () {
-        var Dellength = $("#btnDel").length();
-        console.log(Dellength);
+        var Dellength = $("#btnDel").length;
+        // console.log(Dellength);
         // 弹出层，询问用户是否删除
         layer.confirm('确认删除吗?', { icon: 3, title: '提示' }, function (index) {
             //获取文章id
-            var id = $(this).attr("data-id");
+            var id = $("#btnDel").attr("data-id");
             //do something
             $.ajax({
                 method: "get",
                 url: "/my/article/delete/" + id,
                 success(res) {
                     layer.msg(res.message, {
-                        icon: res.status ? 1 : 5,
+                        icon: res.status ? 5 : 1,
                         time: 600
                     });
                     if (Dellength == 1) {
@@ -47,9 +47,7 @@ $(function () {
         });
     })
 
-    // 初始化分类
     getCates();
-    // 下拉框筛选
     getTable();
 
     //2.定义美化时间的过滤器 -----------------------
@@ -71,11 +69,13 @@ $(function () {
     }
 
     // 筛选功能
-    $("#ctFm").on("submit", function () {
+    $("#ctFm").on("submit", function (e) {
+        e.preventDefault();
         var cate_id = $("#ctFm [name=cate_id]").val();
         var state = $("#ctFm [name=state]").val();
         req.cate_id = cate_id;
         req.state = state;
+        console.log(req);
         getTable();
     })
 
@@ -83,7 +83,6 @@ $(function () {
 // 渲染筛选下拉框
 function getCates() {
     $.get("/my/article/cates", function (res) {
-        console.log(res);
         if (res.status === 0) {
             var strHtml = template("tpl-cates", res.data);
             $("#selects").empty().append(strHtml);
@@ -119,7 +118,7 @@ function readerPage(total) {
     // laypage.reader()方法来渲染分页功结构
     layui.laypage.render({
         elem: "pageBox",//分页容器的iD
-        count: 7,//总数据条数
+        count: total,//总数据条数
         layout: ["count", "limit", "prev", "page", "next", "skip"],
         limits: [2, 3, 5, 10],
         jump: function (obj, first) {
